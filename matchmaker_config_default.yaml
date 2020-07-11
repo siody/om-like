@@ -1,0 +1,8 @@
+telemetry:
+  reportingPeriod: 15s
+  traceSamplingFraction: 2
+  prometheus:
+    enable: true
+    endpoint: /matrixs
+log:
+  level: info

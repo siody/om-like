@@ -17,14 +17,15 @@ package rpc
 import (
 	"context"
 	"fmt"
-	"github.com/pkg/errors"
-	"github.com/sirupsen/logrus"
-	"go.opencensus.io/plugin/ochttp"
-	"go.opencensus.io/plugin/ochttp/propagation/b3"
 	"io/ioutil"
 	"net"
 	"net/http"
 	"net/http/httputil"
+
+	"github.com/pkg/errors"
+	"github.com/sirupsen/logrus"
+	"go.opencensus.io/plugin/ochttp"
+	"go.opencensus.io/plugin/ochttp/propagation/b3"
 	"siody.home/om-like/internal/config"
 	"siody.home/om-like/internal/logging"
 	"siody.home/om-like/internal/telemetry"
@@ -43,7 +44,8 @@ var (
 	})
 )
 
-type HttpHandler func(mux *http.ServeMux)
+// HTTPHandler logic http handler
+type HTTPHandler func(mux *http.ServeMux)
 
 // ServerParams holds all the parameters required to start a gRPC server.
 type ServerParams struct {
@@ -51,7 +53,7 @@ type ServerParams struct {
 	// Do NOT register "/" handler because it's reserved for the proxy.
 	ServeMux *http.ServeMux
 
-	handlerForHttp         []HttpHandler
+	handlerForHTTP         []HTTPHandler
 	handlersForHealthCheck []func(context.Context) error
 
 	httpListener net.Listener
@@ -118,7 +120,7 @@ func NewServerParamsFromConfig(cfg config.View, prefix string, listen func(netwo
 func NewServerParamsFromListeners(httpL net.Listener) *ServerParams {
 	return &ServerParams{
 		ServeMux:       http.NewServeMux(),
-		handlerForHttp: []HttpHandler{},
+		handlerForHTTP: []HTTPHandler{},
 		httpListener:   httpL,
 	}
 }
@@ -140,9 +142,9 @@ func (p *ServerParams) usingTLS() bool {
 }
 
 // AddHandleFunc binds gRPC service handler and an associated HTTP proxy handler.
-func (p *ServerParams) AddHandleFunc(httpHandler HttpHandler) {
+func (p *ServerParams) AddHandleFunc(httpHandler HTTPHandler) {
 	if httpHandler != nil {
-		p.handlerForHttp = append(p.handlerForHttp, httpHandler)
+		p.handlerForHTTP = append(p.handlerForHTTP, httpHandler)
 	}
 }
 

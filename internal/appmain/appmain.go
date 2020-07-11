@@ -97,7 +97,7 @@ func (b *Bindings) RegisterViews(v ...*view.View) {
 }
 
 // AddHandleFunc adds a protobuf service to the grpc server which is starting.
-func (b *Bindings) AddHandleFunc(httpHandler rpc.HttpHandler) {
+func (b *Bindings) AddHandleFunc(httpHandler rpc.HTTPHandler) {
 	b.sp.AddHandleFunc(httpHandler)
 }
 

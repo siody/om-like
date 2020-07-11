@@ -4,12 +4,11 @@ import (
 	"context"
 	"net"
 	"net/http"
+
 	"siody.home/om-like/internal/telemetry"
 )
 
 type insecureServer struct {
-
-
 	httpListener net.Listener
 	httpMux      *http.ServeMux
 	httpServer   *http.Server
@@ -21,7 +20,7 @@ func (s *insecureServer) start(params *ServerParams) error {
 	// Configure the HTTP proxy server.
 	// Bind gRPC handlers
 
-	for _, handlerFunc := range params.handlerForHttp {
+	for _, handlerFunc := range params.handlerForHTTP {
 		handlerFunc(s.httpMux)
 	}
 

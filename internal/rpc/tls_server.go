@@ -36,7 +36,7 @@ func (s *tlsServer) start(params *ServerParams) error {
 	}
 
 	// Start HTTP server
-	for _, handlerFunc := range params.handlerForHttp {
+	for _, handlerFunc := range params.handlerForHTTP {
 		handlerFunc(s.httpMux)
 	}
 
