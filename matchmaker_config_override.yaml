@@ -1,4 +1,3 @@
 api:
   test:
     httpport: 8081
-    format: json

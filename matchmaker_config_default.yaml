@@ -6,3 +6,4 @@ telemetry:
     endpoint: /matrixs
 log:
   level: info
+  format: json
